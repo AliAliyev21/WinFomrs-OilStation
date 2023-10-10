@@ -1,0 +1,14 @@
+C:\Users\user\source\repos\WindowsFormsApp14Gasoline\WindowsFormsApp14Gasoline\bin\Debug\WindowsFormsApp14Gasoline.exe.config
+C:\Users\user\source\repos\WindowsFormsApp14Gasoline\WindowsFormsApp14Gasoline\bin\Debug\WindowsFormsApp14Gasoline.exe
+C:\Users\user\source\repos\WindowsFormsApp14Gasoline\WindowsFormsApp14Gasoline\bin\Debug\WindowsFormsApp14Gasoline.pdb
+C:\Users\user\source\repos\WindowsFormsApp14Gasoline\WindowsFormsApp14Gasoline\obj\Debug\WindowsFormsApp14Gasoline.csproj.AssemblyReference.cache
+C:\Users\user\source\repos\WindowsFormsApp14Gasoline\WindowsFormsApp14Gasoline\obj\Debug\WindowsFormsApp14Gasoline.Form1.resources
+C:\Users\user\source\repos\WindowsFormsApp14Gasoline\WindowsFormsApp14Gasoline\obj\Debug\WindowsFormsApp14Gasoline.Properties.Resources.resources
+C:\Users\user\source\repos\WindowsFormsApp14Gasoline\WindowsFormsApp14Gasoline\obj\Debug\WindowsFormsApp14Gasoline.csproj.GenerateResource.cache
+C:\Users\user\source\repos\WindowsFormsApp14Gasoline\WindowsFormsApp14Gasoline\obj\Debug\WindowsFormsApp14Gasoline.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\WindowsFormsApp14Gasoline\WindowsFormsApp14Gasoline\obj\Debug\WindowsFormsApp14Gasoline.exe
+C:\Users\user\source\repos\WindowsFormsApp14Gasoline\WindowsFormsApp14Gasoline\obj\Debug\WindowsFormsApp14Gasoline.pdb
+C:\Users\user\source\repos\WindowsFormsApp14Gasoline\WindowsFormsApp14Gasoline\bin\Debug\BouncyCastle.Crypto.dll
+C:\Users\user\source\repos\WindowsFormsApp14Gasoline\WindowsFormsApp14Gasoline\bin\Debug\itextsharp.dll
+C:\Users\user\source\repos\WindowsFormsApp14Gasoline\WindowsFormsApp14Gasoline\bin\Debug\itextsharp.xml
+C:\Users\user\source\repos\WindowsFormsApp14Gasoline\WindowsFormsApp14Gasoline\obj\Debug\WindowsFormsApp14Gasoline.csproj.CopyComplete
