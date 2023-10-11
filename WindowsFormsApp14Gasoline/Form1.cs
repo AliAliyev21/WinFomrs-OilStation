@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using iTextSharp.text;
+using iTextSharp.text; 
 using iTextSharp.text.pdf;
-
+using System.Drawing.Text;
 namespace WindowsFormsApp14Gasoline
 {
+
     public partial class Form1 : Form
     {
-
         #region ListGasoline
         List<Gasoline> gasolines = new List<Gasoline>
         {
@@ -80,6 +82,17 @@ namespace WindowsFormsApp14Gasoline
             SetProductPriceHotDogToTextBox();
             SetProductPriceRedBullToTextBox();
             SetProductPriceChipsimToTextBox();
+
+
+        }
+
+        public static void CultureDot()
+        {
+            CultureInfo cultureInfo = new CultureInfo("en-US");
+            cultureInfo.NumberFormat.NumberDecimalSeparator = ".";
+
+            Thread.CurrentThread.CurrentCulture = cultureInfo;
+            Thread.CurrentThread.CurrentUICulture = cultureInfo;
         }
 
         #region Cafe Works
@@ -296,29 +309,29 @@ namespace WindowsFormsApp14Gasoline
         {
             var selectedFuel = comboBoxFuelName.SelectedItem as Gasoline;
 
-            if(selectedFuel != null)
+            if (selectedFuel != null)
             {
-                double priceLiter=selectedFuel.Price;
+                double priceLiter = selectedFuel.Price;
                 double totalPrice = 0;
 
                 if (radioButtonLiter.Checked)
                 {
                     if (double.TryParse(maskedTextBoxBuyLiter.Text, out double liters))
                     {
-
                         totalPrice = priceLiter * liters;
-                        maskedTextBoxBuyAzn.Text = totalPrice.ToString();
+                        maskedTextBoxBuyAzn.Text = totalPrice.ToString("F2") + " Azn";
+                        labelFuelPrice.Text = totalPrice.ToString("F2") + " Azn";
                     }
                 }
                 else if (radioButtonAzn.Checked)
                 {
-                    if(double.TryParse(maskedTextBoxBuyAzn.Text, out double azn))
+                    if (double.TryParse(maskedTextBoxBuyAzn.Text, out double azn))
                     {
-                        totalPrice = azn / priceLiter;
-                        maskedTextBoxBuyLiter.Text = totalPrice.ToString();
+                        totalPrice = azn;
+                        maskedTextBoxBuyLiter.Text = (azn / priceLiter).ToString("F2") + " L";
+                        labelFuelPrice.Text = totalPrice.ToString("F2") + " Azn";
                     }
                 }
-                labelFuelPrice.Text = totalPrice.ToString("F2") + " Azn";
             }
         }
         #endregion
@@ -399,53 +412,67 @@ namespace WindowsFormsApp14Gasoline
                 PdfWriter.GetInstance(doc, new FileStream(fileName, FileMode.Create));
                 doc.Open();
 
-                Paragraph content = new Paragraph();
+                
+                iTextSharp.text.Font titleFont = FontFactory.GetFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1252, BaseFont.NOT_EMBEDDED, 18);
+                Paragraph title = new Paragraph("Invoice details");
+                title.Font = titleFont; 
+                title.Alignment = Element.ALIGN_CENTER;
+                doc.Add(title);
+
+              
+                PdfPTable table = new PdfPTable(3);
+                table.TotalWidth = 500f;
+                table.LockedWidth = true;
+                float[] widths = new float[] { 2f, 1f, 1f };
+                table.SetWidths(widths);
+
+                
+                PdfPCell cell = new PdfPCell(new Phrase("Name", FontFactory.GetFont(BaseFont.HELVETICA, 12, BaseColor.BLACK)));
+                table.AddCell(cell);
+                cell = new PdfPCell(new Phrase("Quantity", FontFactory.GetFont(BaseFont.HELVETICA, 12, BaseColor.BLACK)));
+                table.AddCell(cell);
+                cell = new PdfPCell(new Phrase("Price (Azn)", FontFactory.GetFont(BaseFont.HELVETICA, 12, BaseColor.BLACK)));
+                table.AddCell(cell);
+
                 Gasoline selectedGasoline = comboBoxFuelName.SelectedItem as Gasoline;
-                if (selectedGasoline != null)
-                {
-                    content.Add($"Gasoline Name : {selectedGasoline.Name}\n");
-                    content.Add($"Gasoline Price : {selectedGasoline.Price} Azn\n\n");
-                }
+                AddRowToTable(table, selectedGasoline.Name, "", selectedGasoline.Price.ToString("F2"));
+                AddRowToTable(table, "Coca-Cola", maskedTextBoxCola.Text, textBoxCola.Text);
+                AddRowToTable(table, "Hot-Dog", maskedTextBoxHotDog.Text, textBoxHotDog.Text);
+                AddRowToTable(table, "Red-Bull", maskedTextBoxRedBull.Text, textBoxRedBull.Text);
+                AddRowToTable(table, "Chipsim", maskedTextBoxChipsim.Text, textBoxChipsim.Text);
 
-                if (checkBoxCola.Checked)
-                {
-                    content.Add("Product: Coco-Cola\n");
-                    content.Add($"Quantity: {maskedTextBoxCola.Text}\n");
-                    content.Add($"Price: {textBoxCola.Text} Azn\n\n");
-                }
+                AddTotalRowToTable(table, lblTotals.Text);
 
-                if (checkBoxHotDog.Checked)
-                {
-                    content.Add("Product: Hot-Dog\n");
-                    content.Add($"Quantity: {maskedTextBoxHotDog.Text}\n");
-                    content.Add($"Price: {textBoxHotDog.Text} Azn\n\n");
-                }
+                DateTime now = DateTime.Now;
+                Paragraph dateParagraph = new Paragraph("\r\nHistory : " + now.ToString("dd.MM.yyyy HH:mm:ss"));
+                dateParagraph.Alignment = Element.ALIGN_RIGHT;
 
-                if (checkBoxRedBull.Checked)
-                {
-                    content.Add("Product: Red-Bull\n");
-                    content.Add($"Quantity: {maskedTextBoxRedBull.Text}\n");
-                    content.Add($"Price: {textBoxRedBull.Text} Azn\n\n");
-                }
-
-                if (checkBoxChipsim.Checked)
-                {
-                    content.Add("Product: Chipsim\n");
-                    content.Add($"Quantity: {maskedTextBoxChipsim.Text}\n");
-                    content.Add($"Price: {textBoxChipsim.Text} Azn\n\n");
-                }
-
-                content.Add($"Total Price: {lblTotals.Text}\n");
-                doc.Add(content);
+                doc.Add(table);
+                doc.Add(dateParagraph);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}");
+                MessageBox.Show($"Eror: {ex.Message}");
             }
             finally
             {
                 doc.Close();
             }
+        }
+
+        private void AddRowToTable(PdfPTable table, string productName, string quantity, string price)
+        {
+            table.AddCell(productName);
+            table.AddCell(quantity);
+            table.AddCell(price);
+        }
+
+        private void AddTotalRowToTable(PdfPTable table, string totalAmount)
+        {
+            PdfPCell cell = new PdfPCell(new Phrase("Total Amount", FontFactory.GetFont(BaseFont.HELVETICA, 12, BaseColor.BLACK)));
+            cell.Colspan = 2;
+            table.AddCell(cell);
+            table.AddCell(totalAmount);
         }
 
         private void btnTotal_Click(object sender, EventArgs e)

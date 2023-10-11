@@ -132,5 +132,11 @@
   <ItemGroup>
     <None Include="Resources\minicafe-removebg-preview.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\download.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\NewFolder1\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
