@@ -282,6 +282,10 @@ namespace WindowsFormsApp14Gasoline
             {
                 maskedTextBoxBuyAzn.Text = String.Empty;
             }
+            if (string.IsNullOrWhiteSpace(maskedTextBoxBuyLiter.Text))
+            {
+                labelFuelPrice.Text = "";
+            }
         }
 
 
@@ -302,6 +306,10 @@ namespace WindowsFormsApp14Gasoline
             {
                 maskedTextBoxBuyLiter.Text = String.Empty;
             }
+            if (string.IsNullOrWhiteSpace(maskedTextBoxBuyAzn.Text))
+            {
+                labelFuelPrice.Text = "";
+            }
         }
 
 
@@ -319,7 +327,7 @@ namespace WindowsFormsApp14Gasoline
                     if (double.TryParse(maskedTextBoxBuyLiter.Text, out double liters))
                     {
                         totalPrice = priceLiter * liters;
-                        maskedTextBoxBuyAzn.Text = totalPrice.ToString("F2") + " Azn";
+                        //maskedTextBoxBuyAzn.Text = totalPrice.ToString("F2") + " Azn";
                         labelFuelPrice.Text = totalPrice.ToString("F2") + " Azn";
                     }
                 }
@@ -328,7 +336,7 @@ namespace WindowsFormsApp14Gasoline
                     if (double.TryParse(maskedTextBoxBuyAzn.Text, out double azn))
                     {
                         totalPrice = azn;
-                        maskedTextBoxBuyLiter.Text = (azn / priceLiter).ToString("F2") + " L";
+                        //maskedTextBoxBuyLiter.Text = (azn / priceLiter).ToString("F2") + " L";
                         labelFuelPrice.Text = totalPrice.ToString("F2") + " Azn";
                     }
                 }
